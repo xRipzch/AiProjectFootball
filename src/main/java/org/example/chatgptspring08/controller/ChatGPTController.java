@@ -86,15 +86,6 @@ public class ChatGPTController {
         return lst;
 
 
-        /*ChatResponse response = webClient.post()  , man skal kalde med post
-                .contentType(MediaType.APPLICATION_JSON)  , vigtigt at huske
-                .headers(h -> h.setBearerAuth("sk-kB0mg16RNk3IZlaVdjQ6Sv8Jb9KP4b0")) , sæt openapi key ind. brug evt env variable i application.properties og @Value
-                .bodyValue(chatRequest) her indsættes spørgsmål som er pakket ind i et ChatRequest objekt
-                .retrieve() går igang med at hente
-                .bodyToMono(ChatResponse.class) der kommer json tilbage, og dette json skal bygges om til Java, angiv Java klasse, her vores ChatResponse
-                .block(); her venter vi på at webClient læser restApi og bygger Java
-       */
-
 
     }
 
