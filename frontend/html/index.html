@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Match Prediction</title>
+    <script src="../js/script.js"></script>
+</head>
+<body>
+<h1>Football Match Prediction</h1>
+<form id="matchForm">
+    <label for="team1">Select Team 1:</label>
+    <select id="team1" name="team1">
+        <option value="33">Manchester United</option>
+        <option value="40">Liverpool</option>
+        <!-- Add more team options here -->
+    </select>
+    <br><br>
+
+    <label for="team2">Select Team 2:</label>
+    <select id="team2" name="team2">
+        <option value="33">Manchester United</option>
+        <option value="40">Liverpool</option>
+        <!-- Add more team options here -->
+    </select>
+    <br><br>
+
+    <button type="button" onclick="getPrediction()">Get Prediction</button>
+</form>
+
+<h2>Prediction Result</h2>
+<div id="predictionResult"></div>
+</body>
+</html>
