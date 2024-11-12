@@ -31,7 +31,8 @@ public class OddsApiController {
     public ResponseEntity<List<Map<String, Object>>> getOdds(@PathVariable String team) {
         List<OddsResponse> responseList = oddsWebClient
                 .get()
-                .uri("/v4/sports/soccer_epl/odds?regions=eu&markets=h2h")
+                .uri("/v4/sports/soccer_epl/odds?regions=eu&markets=h2h") // Premier league
+                //.uri("/v4/sports/soccer_uefa_nations_league/odds?regions=eu") // Nations league
                 .header("x-rapidapi-key", apiKey)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<OddsResponse>>() {})  // Expecting a list of OddsResponse
