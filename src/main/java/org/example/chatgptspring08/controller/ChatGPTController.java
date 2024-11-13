@@ -40,10 +40,10 @@ public class ChatGPTController {
 
                 "4. Format the output precisely as follows:\n" +
                 "Team1 - Team2 (DD/MM/YYYY HH:MM)\n" +
-                "* Prediction: (Predicted Winner or Draw based on lowest odds)\n" +
-                "* Team1: (Odds as a decimal) (Site with highest lowest odds)\n" +
+                "* Prediction: (Predicted Winner or Draw based on all of the options with the lowest odds)\n" +
+                "* Team1: (Odds as a decimal) (Site with highest odds)\n" +
                 "* Draw: (Odds as a decimal) (Site with highest draw odds)\n" +
-                "* Team2: (Odds as a decimal) (Site with highest lowest odds)\n\n" +
+                "* Team2: (Odds as a decimal) (Site with highest odds)\n\n" +
 
                 "Example (Only use this as an example):\n" +
                 "Ipswich Town - Manchester United (12/11/2024 21:00)\n" +
@@ -56,7 +56,7 @@ public class ChatGPTController {
                 "- Do not add extra commentary or format changes.\n" +
                 "- Odds must be formatted in decimal (e.g., '4.0').\n" +
                 "- Dates and times should be converted accurately from UK to Danish format.\n" +
-                "- Accurately choose the odds for the specific site\n";
+                "- Accurately choose the odds for the specific site and if there are multiple sites list them all separated by commas.\n";
 
         ChatRequest chatRequest = new ChatRequest(); //ChatRequest objekt har jeg dannet med https://www.jsonschema2pojo.org/ værktøj
         chatRequest.setModel("gpt-4o"); //vælg rigtig model. se powerpoint
@@ -65,6 +65,8 @@ public class ChatGPTController {
         lstMessages.add(new Message("user",  promptManuscript + "\"" + message + "\""));
         chatRequest.setMessages(lstMessages);
         //chatRequest.setN(1); //n er antal svar fra chatgpt
+        //chatRequest.setTemperature(1); //jo højere jo mere fantasifuldt svar (se powerpoint)
+        //chatRequest.setMaxTokens(1000); //længde af svar
         chatRequest.setStream(false); //stream = true, er for viderekomne, der kommer flere svar asynkront
         chatRequest.setPresencePenalty(1); //noget med ikke at gentage sig. se powerpoint
 
