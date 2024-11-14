@@ -25,7 +25,7 @@ public class OddsApiController {
     @GetMapping("/football/odds/teams/{team}")
     public ResponseEntity<List<Map<String, Object>>> getOdds(@PathVariable String team) {
         List<OddsResponse> responseList = oddsService.fetchOddsFromApi();  // This will use caching
-          debugCache.printCacheContent();
+          debugCache.printCacheContent();  // for debuggin purposes. Will show the cached content.
         List<Map<String, Object>> results = new ArrayList<>();
 
         for (OddsResponse response : responseList) {

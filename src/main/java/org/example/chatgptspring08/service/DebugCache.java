@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class DebugCache {
 
 
-    // Example method to check cache content
+    // Class is only for debugging cache.
     @Autowired
     private CacheManager cacheManager;
 

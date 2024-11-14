@@ -20,10 +20,10 @@ public class OddsService {
     @Value("${odds.api.key}")
     private String apiKey;
 
-    @Cacheable(value = "oddsCache", key = "'fullOddsResponse'")
+    @Cacheable(value = "oddsCache", key = "'fullOddsResponse'")   // value= cache name, key= cache ke
     public List<OddsResponse> fetchOddsFromApi() {
-        System.out.println("Fetching data from external API...");
-        return oddsWebClient
+        System.out.println("Fetching data from external API...");  // Will only be printed if odds data is not cached.
+        return oddsWebClient   // Will fetch if not cached
                 .get()
                 .uri("/v4/sports/soccer_epl/odds?regions=eu&markets=h2h")
                 .header("x-rapidapi-key", apiKey)

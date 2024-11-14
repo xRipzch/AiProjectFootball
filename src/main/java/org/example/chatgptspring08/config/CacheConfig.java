@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching
 public class CacheConfig {
     @Bean
-    public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("oddsCache");
+    public CacheManager cacheManager() {   // Here we create our cache.
+        return new ConcurrentMapCacheManager("oddsCache");   // like a regular map, but thread safe. Allows for concurrent read and write operations.
+
     }
 }
