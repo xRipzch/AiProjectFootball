@@ -64,8 +64,22 @@ public class OddsResponse {
         return oddsRespons;
     }
 
+
+
     @JsonProperty("bookmakers")
     public void setBookmakers(List<Bookmaker> oddsRespons) {
         this.oddsRespons = oddsRespons;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "OddsResponse{" +
+                "commence_time='" + commence_time + '\'' +
+                ", home_team='" + home_team + '\'' +
+                ", away_team='" + away_team + '\'' +
+                ", oddsRespons=" + oddsRespons +
+                '}';
     }
 }

@@ -1,43 +1,31 @@
 package org.example.chatgptspring08.controller;
 
 import org.example.chatgptspring08.dto.odds.OddsResponse;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
+import org.example.chatgptspring08.service.DebugCache;
+import org.example.chatgptspring08.service.OddsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 @CrossOrigin("*")
 @RestController
 public class OddsApiController {
-    private final WebClient oddsWebClient;
 
-    public OddsApiController(WebClient.Builder webClientBuilder) {
-        this.oddsWebClient = webClientBuilder.baseUrl("https://odds.p.rapidapi.com").build();
-    }
+    @Autowired
+    private OddsService oddsService;
 
-    @Value("${odds.api.key}")
-    private String apiKey;
+    @Autowired
+    DebugCache debugCache;
 
     @GetMapping("/football/odds/teams/{team}")
     public ResponseEntity<List<Map<String, Object>>> getOdds(@PathVariable String team) {
-        List<OddsResponse> responseList = oddsWebClient
-                .get()
-                .uri("/v4/sports/soccer_epl/odds?regions=eu&markets=h2h") // Premier league
-                //.uri("/v4/sports/soccer_uefa_nations_league/odds?regions=eu") // Nations league
-                .header("x-rapidapi-key", apiKey)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<OddsResponse>>() {})  // Expecting a list of OddsResponse
-                .block();
-
+        List<OddsResponse> responseList = oddsService.fetchOddsFromApi();  // This will use caching
+          debugCache.printCacheContent();
         List<Map<String, Object>> results = new ArrayList<>();
 
         for (OddsResponse response : responseList) {
