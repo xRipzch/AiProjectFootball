@@ -1,6 +1,5 @@
 package org.example.chatgptspring08;
 
-import org.example.chatgptspring08.service.TeamService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

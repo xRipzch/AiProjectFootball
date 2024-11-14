@@ -1,28 +1,45 @@
 
 package org.example.chatgptspring08.dto.odds;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.annotation.processing.Generated;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "title",
     "last_update",
+    "link",
     "markets"
 })
 @Generated("jsonschema2pojo")
 public class Bookmaker {
 
+    @JsonProperty("key")
+    private String key;
     @JsonProperty("title")
     private String title;
     @JsonProperty("last_update")
-    private String last_update;
+    private String lastUpdate;
+    @JsonProperty("link")
+    private String link;
     @JsonProperty("markets")
     private List<Market> markets;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+
+    @JsonProperty("key")
+    public String getKey() {
+        return key;
+    }
+
+    @JsonProperty("key")
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     @JsonProperty("title")
     public String getTitle() {
@@ -35,13 +52,23 @@ public class Bookmaker {
     }
 
     @JsonProperty("last_update")
-    public String getLast_update() {
-        return last_update;
+    public String getLastUpdate() {
+        return lastUpdate;
     }
 
     @JsonProperty("last_update")
-    public void setLast_update(String last_update) {
-        this.last_update = last_update;
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    @JsonProperty("link")
+    public String getLink() {
+        return link;
+    }
+
+    @JsonProperty("link")
+    public void setLink(String link) {
+        this.link = link;
     }
 
     @JsonProperty("markets")

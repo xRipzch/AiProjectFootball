@@ -1,17 +1,12 @@
 package org.example.chatgptspring08.controller;
 
+import org.example.chatgptspring08.dto.odds.OddsRequest;
 import org.example.chatgptspring08.dto.odds.OddsResponse;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
+import org.example.chatgptspring08.service.OddsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,40 +14,33 @@ import java.util.Map;
 @RestController
 public class OddsApiController {
     private final WebClient oddsWebClient;
+    private final OddsService oddsService;
 
-    public OddsApiController(WebClient.Builder webClientBuilder) {
+    public OddsApiController(WebClient.Builder webClientBuilder, OddsService oddsService) {
         this.oddsWebClient = webClientBuilder.baseUrl("https://odds.p.rapidapi.com").build();
+        this.oddsService = oddsService;
     }
 
-    @Value("${odds.api.key}")
-    private String apiKey;
+    // Receive head-to-head matches from specified league, region, and team
+    // - Outdated method
+    /*
+    @GetMapping("/football/odds/h2h/leagues/{league}/regions/{region}/teams/{team}")
+    public ResponseEntity<List<Map<String, Object>>> getOdds(@PathVariable String league, @PathVariable String region, @PathVariable String team) {
+        List<OddsResponse> responseList = oddsService.getOddsFromLeagueAndRegion(oddsWebClient, league, region);
+        List<Map<String, Object>> filteredMatchList = oddsService.getMatchesForTeam(responseList, team);
+        return ResponseEntity.ok(filteredMatchList);
+    }*/
 
-    @GetMapping("/football/odds/teams/{team}")
-    public ResponseEntity<List<Map<String, Object>>> getOdds(@PathVariable String team) {
-        List<OddsResponse> responseList = oddsWebClient
-                .get()
-                .uri("/v4/sports/soccer_epl/odds?regions=eu&markets=h2h") // Premier league
-                //.uri("/v4/sports/soccer_uefa_nations_league/odds?regions=eu") // Nations league
-                .header("x-rapidapi-key", apiKey)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<OddsResponse>>() {})  // Expecting a list of OddsResponse
-                .block();
+    // Receive head-to-head matches using OddsRequest
+    // - Receive data through @RequestBody instead of @PathVariable
+    @PostMapping("/football/odds/h2h")
+    public ResponseEntity<List<Map<String, Object>>> getOdds2(@RequestBody OddsRequest oddsRequest) {
+        String league = oddsRequest.getLeague();
+        String region = oddsRequest.getRegion();
+        String team = oddsRequest.getTeam();
 
-        List<Map<String, Object>> results = new ArrayList<>();
-
-        for (OddsResponse response : responseList) {
-            String homeTeam = response.getHome_team().toLowerCase();
-            String awayTeam = response.getAway_team().toLowerCase();
-
-            if (homeTeam.contains(team.toLowerCase()) || awayTeam.contains(team.toLowerCase())) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("Bookmaker", response.getBookmakers());
-                map.put("HomeTeam", response.getHome_team());
-                map.put("AwayTeam", response.getAway_team());
-                map.put("DateTime", response.getCommence_time());
-                results.add(map);
-            }
-        }
-        return ResponseEntity.ok(results);
+        List<OddsResponse> responseList = oddsService.getOddsFromLeagueAndRegion(oddsWebClient, league, region);
+        List<Map<String, Object>> filteredMatchList = oddsService.getMatchesForTeam(responseList, team);
+        return ResponseEntity.ok(filteredMatchList);
     }
 }
