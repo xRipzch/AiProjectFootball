@@ -19,31 +19,7 @@ public class ChatGPTService {
     // Fetch a formatted summary of football match odds from JSON data
     public ChatRequest fetchOddsSummary(String message) {
         /* TO-DO: IMPLEMENT SITE LINK FOR EACH ODDS */
-        final String promptManuscript = "You are given JSON data on football matches, including odds from multiple bookmakers for Team1, Team2, and Draw outcomes. For each match, follow these instructions strictly:\n" +
-                "1. Convert the date and time of the match from UK format to Danish format (DD/MM/YYYY HH:MM, 24-hour clock).\n" +
-                "2. Identify and select the highest odds for Team1, Draw, and Team2 outcomes across all bookmakers.\n" +
-                "3. Calculate and select the highest for each outcome, and indicate the respective site.\n" +
-                "4. Output response in HTML\n" +
-                "5. Format the output precisely as follows:\n" +
-
-                "<h1>Team1 - Team2 (DD/MM/YYYY HH:MM)</h1>\n" +
-                "* Prediction: (Predicted Winner or Draw based on all of the options with the lowest odds)\n" +
-                "* Team1: (Odds as a decimal) (Site with highest odds)\n" +
-                "* Draw: (Odds as a decimal) (Site with highest draw odds)\n" +
-                "* Team2: (Odds as a decimal) (Site with highest odds)\n\n" +
-
-                "Example (Only use this as an example):\n" +
-                "Ipswich Town - Manchester United (12/11/2024 21:00)\n" +
-                "* Prediction: Manchester United\n" +
-                "* Ipswich Town: 5.0 (Betfair)\n" +
-                "* Draw: 4.4 (Betfair)\n" +
-                "* Manchester United: 1.59 (Betclic)\n\n" +
-
-                "Guidelines:\n" +
-                "- Do not add extra commentary or format changes.\n" +
-                "- Odds must be formatted in decimal (e.g., '4.0').\n" +
-                "- Dates and times should be converted accurately from UK to Danish format.\n" +
-                "- Accurately choose the odds for the specific site and if there are multiple sites list them all separated by commas.\n";
+        final String promptManuscript = "\"You are given JSON data on football matches, including odds from multiple bookmakers for Team1, Team2, and Draw outcomes. For each match, follow these instructions strictly:\\n\\n1. Parse the JSON data and extract the relevant details for each match, including the team names (Team1 and Team2) and the odds for each outcome (Team1 win, Draw, Team2 win) from all bookmakers.\\n2. Convert the date and time of the match from UK format to Danish format (DD/MM/YYYY HH:MM, 24-hour clock).\\n3. Identify and select the highest odds for each outcome (Team1, Draw, Team2) across all bookmakers.\\n4. Accurately indicate the respective site(s) offering the highest odds for each outcome.\\n5. Ensure that the odds in the output are taken directly from the JSON data. Do not invent or modify the odds.\\n6. Output the response strictly as plain HTML (no ```html or ``` markers).\\n7. The HTML must follow this precise structure:\\n\\n<div class=\\\"match\\\">\\n  <h1 class=\\\"team-names\\\">[Team1] - [Team2] (DD/MM/YYYY HH:MM)</h1>\\n  <ul class=\\\"odds-predictions\\\">\\n    <li><strong>Prediction:</strong> (Predicted Winner or Draw based on the lowest odds)</li>\\n    <li><strong>[Team1]:</strong> (Highest Odds as a decimal) (Site(s) offering the highest odds)</li>\\n    <li><strong>Draw:</strong> (Highest Odds as a decimal) (Site(s) offering the highest odds)</li>\\n    <li><strong>[Team2]:</strong> (Highest Odds as a decimal) (Site(s) offering the highest odds)</li>\\n  </ul>\\n</div>\\n\\nExample Output:\\n\\n<div class=\\\"match\\\">\\n  <h1 class=\\\"team-names\\\">Ipswich Town - Manchester United (12/11/2024 21:00)</h1>\\n  <ul class=\\\"odds-predictions\\\">\\n    <li><strong>Prediction:</strong> Manchester United</li>\\n    <li><strong>Ipswich Town:</strong> 5.0 (Betfair)</li>\\n    <li><strong>Draw:</strong> 4.4 (Betfair)</li>\\n    <li><strong>Manchester United:</strong> 1.59 (Betclic)</li>\\n  </ul>\\n</div>\\n\\nGuidelines:\\n- Replace [Team1] and [Team2] with the actual team names from the JSON data.\\n- All odds must be extracted directly from the provided JSON data, and the sites listed must match the sites offering those odds.\\n- All responses must use plain HTML strictly as defined above, without ```html or ``` markers.\\n- Dates and times must be converted from UK format to Danish format accurately.\\n- Ensure all odds are formatted as decimals (e.g., \\\"4.0\\\").\\n- For each outcome ([Team1], Draw, [Team2]), if multiple sites have the highest odds, list all sites separated by commas.\\n- No extra commentary, no changes to the structure, and no additional text outside of the specified HTML format.\\n- It is critical that the odds and sites are accurate and match the data provided in the JSON. Do not fabricate or make up odds or site names under any circumstances.\"\n";
 
         ChatRequest chatRequest = new ChatRequest();
         chatRequest.setModel("gpt-4o"); //vælg rigtig model. se powerpoint
@@ -52,7 +28,7 @@ public class ChatGPTService {
         lstMessages.add(new Message("user",  promptManuscript + "\"" + message + "\""));
         chatRequest.setMessages(lstMessages);
         //chatRequest.setN(1); //n er antal svar fra chatgpt
-        //chatRequest.setTemperature(1); //jo højere jo mere fantasifuldt svar (se powerpoint)
+        chatRequest.setTemperature(1); //jo højere jo mere fantasifuldt svar (se powerpoint)
         //chatRequest.setMaxTokens(1000); //længde af svar
         chatRequest.setStream(false); //stream = true, er for viderekomne, der kommer flere svar asynkront
         chatRequest.setPresencePenalty(1); //noget med ikke at gentage sig. se powerpoint

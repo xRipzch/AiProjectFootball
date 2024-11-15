@@ -1,0 +1,136 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background: url('/images/oddskingz.png') repeat;
+    background-position-x: -21.2vw;
+}
+
+/* Wrapper styling */
+.main-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form container */
+form {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+/* Form elements styling */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+}
+
+select, input[type="text"], button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 400px) {
+    form {
+        width: 90%;
+    }
+}
+
+/* Match card container */
+.match-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Match info */
+.match {
+    text-align: center;
+}
+
+.team-names {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+/* Odds and predictions list */
+.odds-predictions {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.odds-predictions li {
+    font-size: 14px;
+    margin: 8px 0;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.odds-predictions li strong {
+    color: #333;
+}
+
+/* Highlight key odds or predictions */
+.odds-predictions li:nth-child(1) {
+    background: #e9f7ef;
+    border-color: #d4edda;
+    color: #155724;
+    font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .match-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .team-names {
+        font-size: 16px;
+    }
+
+    .odds-predictions li {
+        font-size: 13px;
+        padding: 8px;
+    }
+}

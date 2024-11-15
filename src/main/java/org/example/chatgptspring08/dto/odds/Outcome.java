@@ -52,4 +52,7 @@ public class Outcome {
         this.additionalProperties.put(name, value);
     }
 
+
+
+
 }

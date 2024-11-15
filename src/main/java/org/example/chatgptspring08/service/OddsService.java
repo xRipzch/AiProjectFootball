@@ -21,10 +21,9 @@ public class OddsService {
     // - League: football league
     // - Region: of betting websites
 
+    //@Cacheable(value = "oddsCache", key = "'fullOddsResponse'")  // value= cache name, key= cache key
 
-    //@Cacheable(value = "leagueCache", key = "#leagueId", unless = "#result == null")
-
-    @Cacheable(value = "oddsCache", key = "'fullOddsResponse'")  // value= cache name, key= cache key
+    @Cacheable(value = "oddsCache", key = "'oddsData_' + #league", unless = "#result == null")
     public List<OddsResponse> getOddsFromLeagueAndRegion(WebClient webClient, String league, String region) {
         System.out.println("Fetching data from external API...");
         return webClient
@@ -47,10 +46,12 @@ public class OddsService {
 
             if (homeTeam.contains(team.toLowerCase()) || awayTeam.contains(team.toLowerCase())) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("Bookmaker", response.getBookmakers());
+                // Gets the first match (e.g. Betfair and Matchbook returns 2 matches with absurd odds)
+                map.put("Bookmaker", response.getBookmakers().get(0));
                 map.put("HomeTeam", response.getHome_team());
                 map.put("AwayTeam", response.getAway_team());
                 map.put("DateTime", response.getCommence_time());
+                map.put("Odds" , response.getBookmakers().get(0).getMarkets().get(0).getOutcomes());
                 filteredTeamList.add(map);
             }
         }
