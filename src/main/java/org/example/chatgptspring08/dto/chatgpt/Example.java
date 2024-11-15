@@ -1,11 +1,15 @@
-package org.example.chatgptspring08.dto;
 
-import com.fasterxml.jackson.annotation.*;
+package org.example.chatgptspring08.dto.chatgpt;
 
-import javax.annotation.processing.Generated;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -14,10 +18,11 @@ import java.util.Map;
     "created",
     "model",
     "choices",
-    "usage"
+    "usage",
+    "system_fingerprint"
 })
-@Generated("jsonschema2pojo")
-public class ChatResponse {
+
+public class Example {
 
     @JsonProperty("id")
     private String id;
@@ -31,6 +36,8 @@ public class ChatResponse {
     private List<Choice> choices;
     @JsonProperty("usage")
     private Usage usage;
+    @JsonProperty("system_fingerprint")
+    private Object systemFingerprint;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -92,6 +99,16 @@ public class ChatResponse {
     @JsonProperty("usage")
     public void setUsage(Usage usage) {
         this.usage = usage;
+    }
+
+    @JsonProperty("system_fingerprint")
+    public Object getSystemFingerprint() {
+        return systemFingerprint;
+    }
+
+    @JsonProperty("system_fingerprint")
+    public void setSystemFingerprint(Object systemFingerprint) {
+        this.systemFingerprint = systemFingerprint;
     }
 
     @JsonAnyGetter
