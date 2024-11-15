@@ -3,26 +3,34 @@ const baseUrl = "http://localhost:8080";
 
 teamForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const league = document.getElementById("leagues").value;
+    const region = document.getElementById("regions").value;
     const teamName = document.getElementById("team").value;
-    const oddsJsonOutput = await fetchTeamOdds(teamName);
+
+    const oddsJsonOutput = await fetchTeamOdds2(league, region, teamName);
     console.log(oddsJsonOutput)
     const chatJsonOutput = await fetchChatGPTPrompt(oddsJsonOutput);
     console.log(chatJsonOutput);
 });
 
-async function fetchTeamOdds(team) {
-    const oddsUrl = baseUrl + "/football/odds/teams/" + team;
+async function fetchTeamOdds(league, region, team) {
+    const oddsUrl = baseUrl + "/football/odds/h2h/leagues/" + league + "/regions/" + region + "/teams/" + team;
     return await fetch(oddsUrl, { mode: 'cors' })  // Set mode to 'cors'
         .then(response => response.json());
 }
 
-// Doesn't work properly
-async function fetchChatGPTPrompt2(oddsJsonOutput) {
-    const test = JSON.stringify(oddsJsonOutput);
-    console.log(test)
-    const promptChatUrl = `${baseUrl}/chat/${test}`;
+async function fetchTeamOdds2(league, region, team) {
+    const oddsUrl = baseUrl + "/football/odds/h2h";
+    const requestData = { league, region, team };
 
-    return await fetch(promptChatUrl, { mode: 'cors' })  // Set mode to 'cors'
+    // Send the request with POST and the requestData in the body
+    return await fetch(oddsUrl, {
+        method: 'POST', // Change to POST
+        headers: {
+            'Content-Type': 'application/json', // Indicate the data is in JSON format
+        },
+        body: JSON.stringify(requestData), // Convert the request data to a JSON string
+    })
         .then(response => response.json());
 }
 

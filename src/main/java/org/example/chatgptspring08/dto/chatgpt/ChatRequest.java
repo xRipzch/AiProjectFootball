@@ -1,4 +1,4 @@
-package org.example.chatgptspring08.dto;
+package org.example.chatgptspring08.dto.chatgpt;
 
 import com.fasterxml.jackson.annotation.*;
 

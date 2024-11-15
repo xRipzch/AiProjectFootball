@@ -1,5 +1,5 @@
 
-package org.example.chatgptspring08.dto;
+package org.example.chatgptspring08.dto.chatgpt;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
