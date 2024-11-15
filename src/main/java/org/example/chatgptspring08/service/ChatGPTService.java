@@ -23,9 +23,10 @@ public class ChatGPTService {
                 "1. Convert the date and time of the match from UK format to Danish format (DD/MM/YYYY HH:MM, 24-hour clock).\n" +
                 "2. Identify and select the highest odds for Team1, Draw, and Team2 outcomes across all bookmakers.\n" +
                 "3. Calculate and select the highest for each outcome, and indicate the respective site.\n" +
-                "4. Format the output precisely as follows:\n" +
+                "4. Output response in HTML\n" +
+                "5. Format the output precisely as follows:\n" +
 
-                "Team1 - Team2 (DD/MM/YYYY HH:MM)\n" +
+                "<h1>Team1 - Team2 (DD/MM/YYYY HH:MM)</h1>\n" +
                 "* Prediction: (Predicted Winner or Draw based on all of the options with the lowest odds)\n" +
                 "* Team1: (Odds as a decimal) (Site with highest odds)\n" +
                 "* Draw: (Odds as a decimal) (Site with highest draw odds)\n" +
